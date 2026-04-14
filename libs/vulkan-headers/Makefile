@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=vulkan-headers
-PKG_VERSION:=1.4.328
+PKG_VERSION:=1.4.349
 PKG_SOURCE:=Vulkan-Headers-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/KhronosGroup/Vulkan-Headers/tar.gz/v$(PKG_VERSION)?
 PKG_HASH:=3ad56d387179b47dd632432ccf989bbb69773e1d732692b7bbad9c4d36aa1304

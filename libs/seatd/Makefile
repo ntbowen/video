@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=seatd
-PKG_VERSION:=0.9.1
+PKG_VERSION:=0.9.3
 PKG_RELEASE:=2
 
 PKG_SOURCE_PROTO:=git

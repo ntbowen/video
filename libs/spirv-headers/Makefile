@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=spirv-headers
-PKG_VERSION:=1.4.328.0
+PKG_VERSION:=1.4.341.0
 
 PKG_SOURCE:=SPIRV-Headers-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/KhronosGroup/SPIRV-Headers/tar.gz/vulkan-sdk-$(PKG_VERSION)?

@@ -1,7 +1,7 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sdl2-mixer
-PKG_VERSION:=2.8.1
+PKG_VERSION:=3.2.0
 PKG_RELEASE:=1
 
 PKG_SOURCE:=SDL2_mixer-$(PKG_VERSION).tar.gz
