@@ -1,0 +1,32 @@
+--- a/lib/SPIRV/SPIRVReader.cpp
++++ b/lib/SPIRV/SPIRVReader.cpp
+@@ -1875,11 +1875,9 @@ llvm::Value* SPIRV::SPIRVToLLVM::transValueWithoutDecoration(
+     SPIRVLifetimeStart *LTStart = static_cast<SPIRVLifetimeStart *>(BV);
+     IRBuilder<> Builder(BB);
+     SPIRVWord Size = LTStart->getSize();
+-    ConstantInt *S = nullptr;
+-    if (Size)
+-      S = Builder.getInt64(Size);
++    (void)Size;
+     Value *Var = transValue(LTStart->getObject(), F, BB);
+-    CallInst *Start = Builder.CreateLifetimeStart(Var, S);
++    CallInst *Start = Builder.CreateLifetimeStart(Var);
+     return mapValue(BV, Start);
+   }
+ 
+@@ -1888,12 +1886,10 @@ llvm::Value* SPIRV::SPIRVToLLVM::transValueWithoutDecoration(
+     SPIRVLifetimeStop *LTStop = static_cast<SPIRVLifetimeStop *>(BV);
+     IRBuilder<> Builder(BB);
+     SPIRVWord Size = LTStop->getSize();
+-    ConstantInt *S = nullptr;
+-    if (Size)
+-      S = Builder.getInt64(Size);
++    (void)Size;
+     auto *Var = transValue(LTStop->getObject(), F, BB);
+     for (const auto &I : Var->users())
+       if (auto *II = getLifetimeStartIntrinsic(dyn_cast<Instruction>(I)))
+-        return mapValue(BV, Builder.CreateLifetimeEnd(II->getOperand(1), S));
+-    return mapValue(BV, Builder.CreateLifetimeEnd(Var, S));
++        return mapValue(BV, Builder.CreateLifetimeEnd(II->getOperand(1)));
++    return mapValue(BV, Builder.CreateLifetimeEnd(Var));
+   }

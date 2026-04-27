@@ -1,0 +1,15 @@
+--- a/lib/SPIRV/LLVMToSPIRVDbgTran.cpp	2025-09-29 18:53:11.000000000 +0800
++++ b/lib/SPIRV/LLVMToSPIRVDbgTran.cpp	2026-04-27 20:14:55.305231936 +0800
+@@ -587,8 +587,10 @@
+   if (isNonSemanticDebugInfo())
+     generateBuildIdentifierAndStoragePath(CU);
+ 
+-  auto DwarfLang =
+-      static_cast<llvm::dwarf::SourceLanguage>(CU->getSourceLanguage());
++  auto SL = CU->getSourceLanguage();
++  auto DwarfLang = llvm::dwarf::toDW_LANG(
++      static_cast<llvm::dwarf::SourceLanguageName>(SL.getName()),
++      SL.getVersion()).value_or(llvm::dwarf::DW_LANG_C);
+   Ops[LanguageIdx] =
+       BM->getDebugInfoEIS() == SPIRVEIS_NonSemantic_Shader_DebugInfo_200
+           ? convertDWARFSourceLangToSPIRVNonSemanticDbgInfo(DwarfLang)
