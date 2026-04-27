@@ -141,7 +141,7 @@ CMAKE_OPTIONS += \
 	-DCOMPILER_RT_BUILD_PROFILE=OFF \
 	-DCOMPILER_RT_BUILD_MEMPROF=OFF \
 	-DLIBCLC_CUSTOM_LLVM_TOOLS_BINARY_DIR="$(STAGING_DIR_HOST)/llvm-mesa/bin" \
-	-DLIBCLC_TARGETS_TO_BUILD="amdgcn--;amdgcn--amdhsa;clspv--;clspv64--;r600--;nvptx--;nvptx64--;nvptx--nvidiacl;nvptx64--nvidiacl;amdgcn-mesa-mesa3d;spirv-mesa3d-;spirv64-mesa3d-" \
+	-DLIBCLC_TARGETS_TO_BUILD="amdgcn--;amdgcn-amd-amdhsa;clspv--;clspv64--;r600--;nvptx64--;nvptx64--nvidiacl;amdgcn-mesa-mesa3d;spirv-mesa3d-;spirv64-mesa3d-" \
 	-DLLVM_TARGET_ARCH=$(LLVM_TARGET_ARCH) \
 	-DLLVM_TARGETS_TO_BUILD="$(subst $(space),;,$(LLVM_TARGETS_TO_BUILD))" \
 	-DLLVM_EXPERIMENTAL_TARGETS_TO_BUILD="$(subst $(space),;,$(LLVM_EXPERIMENTAL_TARGETS_TO_BUILD))" \
@@ -217,6 +217,13 @@ endef
 define Host/Prepare
 	$(call Host/Prepare/Default)
 	$(STAGING_DIR_HOST)/bin/libdeflate-gzip -dc $(DL_DIR)/$(SPIRV_LLVM_TRANSLATOR_FILE) | $(TAR) -C $(HOST_BUILD_DIR)/llvm/projects $(TAR_OPTIONS)
+	@echo "Applying SPIRV-Translator LLVM22 API fix..."
+	patch -p1 -d $(HOST_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
+		< $(CURDIR)/patches-spirv/101-fix-spirv-translator-llvm22-api.patch
+	patch -p1 -d $(HOST_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
+		< $(CURDIR)/patches-spirv/102-fix-spirv-reader-lifetime-llvm22.patch
+	patch -p1 -d $(HOST_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
+		< $(CURDIR)/patches-spirv/103-fix-spirv-passplugin-header-llvm22.patch
 endef
 
 define Host/Install
@@ -225,7 +232,7 @@ define Host/Install
 	for file in \
 		clang-diff clang-fuzzer-dictionary count FileCheck lli-child-target \
 		llvm-isel-fuzzer llvm-jitlink-executor llvm-lit llvm-locstats llvm-min-tblgen \
-		llvm-opt-fuzzer llvm-PerfectShuffle not obj2yaml prepare_builtins split-file \
+		llvm-opt-fuzzer llvm-PerfectShuffle not obj2yaml split-file \
 		UnicodeNameMappingGenerator yaml2obj yaml-bench \
 		; do \
 		$(INSTALL_BIN) $(HOST_BUILD_DIR)/build/bin/$$$${file} $(CMAKE_HOST_INSTALL_PREFIX)/bin ; \
@@ -250,13 +257,20 @@ endef
 define Build/Prepare
 	$(call Build/Prepare/Default)
 	$(STAGING_DIR_HOST)/bin/libdeflate-gzip -dc $(DL_DIR)/$(SPIRV_LLVM_TRANSLATOR_FILE) | $(TAR) -C $(PKG_BUILD_DIR)/llvm/projects $(TAR_OPTIONS)
+	@echo "Applying SPIRV-Translator LLVM22 API fix (target build)..."
+	patch -p1 -d $(PKG_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
+		< $(CURDIR)/patches-spirv/101-fix-spirv-translator-llvm22-api.patch
+	patch -p1 -d $(PKG_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
+		< $(CURDIR)/patches-spirv/102-fix-spirv-reader-lifetime-llvm22.patch
+	patch -p1 -d $(PKG_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
+		< $(CURDIR)/patches-spirv/103-fix-spirv-passplugin-header-llvm22.patch
 endef
 
 define Build/Install
 	$(call Build/Install/Default)
 # hack: install SPIRV OpenCL libs also to host build to avoid having to build LLVM three times
 	$(INSTALL_DIR) $(CMAKE_HOST_INSTALL_PREFIX)/share/clc
-	$(CP) $(PKG_INSTALL_DIR)/usr/share/clc/spirv{,64}-mesa3d-.spv $(CMAKE_HOST_INSTALL_PREFIX)/share/clc
+	$(CP) $(PKG_INSTALL_DIR)/usr/lib/clang/*/lib/libclc/spirv{,64}-mesa3d-.spv $(CMAKE_HOST_INSTALL_PREFIX)/share/clc
 endef
 
 define Package/libclang/install
