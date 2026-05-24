@@ -217,13 +217,6 @@ endef
 define Host/Prepare
 	$(call Host/Prepare/Default)
 	$(STAGING_DIR_HOST)/bin/libdeflate-gzip -dc $(DL_DIR)/$(SPIRV_LLVM_TRANSLATOR_FILE) | $(TAR) -C $(HOST_BUILD_DIR)/llvm/projects $(TAR_OPTIONS)
-	@echo "Applying SPIRV-Translator LLVM22 API fix..."
-	patch -p1 -d $(HOST_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
-		< $(CURDIR)/patches-spirv/101-fix-spirv-translator-llvm22-api.patch
-	patch -p1 -d $(HOST_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
-		< $(CURDIR)/patches-spirv/102-fix-spirv-reader-lifetime-llvm22.patch
-	patch -p1 -d $(HOST_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
-		< $(CURDIR)/patches-spirv/103-fix-spirv-passplugin-header-llvm22.patch
 endef
 
 define Host/Install
@@ -257,13 +250,6 @@ endef
 define Build/Prepare
 	$(call Build/Prepare/Default)
 	$(STAGING_DIR_HOST)/bin/libdeflate-gzip -dc $(DL_DIR)/$(SPIRV_LLVM_TRANSLATOR_FILE) | $(TAR) -C $(PKG_BUILD_DIR)/llvm/projects $(TAR_OPTIONS)
-	@echo "Applying SPIRV-Translator LLVM22 API fix (target build)..."
-	patch -p1 -d $(PKG_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
-		< $(CURDIR)/patches-spirv/101-fix-spirv-translator-llvm22-api.patch
-	patch -p1 -d $(PKG_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
-		< $(CURDIR)/patches-spirv/102-fix-spirv-reader-lifetime-llvm22.patch
-	patch -p1 -d $(PKG_BUILD_DIR)/llvm/projects/SPIRV-LLVM-Translator-$(SPIRV_LLVM_TRANSLATOR_VERSION) \
-		< $(CURDIR)/patches-spirv/103-fix-spirv-passplugin-header-llvm22.patch
 endef
 
 define Build/Install
