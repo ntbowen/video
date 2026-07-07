@@ -5,7 +5,7 @@ PKG_VERSION:=1.4.356
 
 PKG_SOURCE:=Vulkan-Loader-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/KhronosGroup/Vulkan-Loader/tar.gz/v$(PKG_VERSION)?
-PKG_HASH:=f0aac83f32b2895a15fb0686defc16755810e2705a3fd917cb9535ca79c71d4f
+PKG_HASH:=4e5449c83c34e9166fb11dfd59a8ceda1512cae3565e8c1f821cbabab812efdb
 
 PKG_MAINTAINER:=Daniel Golle <daniel@makrotopia.org>
 PKG_LICENSE:=Apache-2.0
