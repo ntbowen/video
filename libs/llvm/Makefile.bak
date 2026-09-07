@@ -1,11 +1,11 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=llvm-project
-PKG_VERSION:=22.1.7
+PKG_VERSION:=22.1.8
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).src.tar.xz
 PKG_SOURCE_URL:=https://github.com/llvm/llvm-project/releases/download/llvmorg-$(PKG_VERSION)
-PKG_HASH:=6e0b376a1f6d9873e7dfb09ae6e04b9c7024400f01733fa4c29be69d5c138bc2
+PKG_HASH:=922f1817a0df7b1489272d18134ee0087a8b068828f87ac63b9861b1a9965888
 PKG_CPE_ID:=cpe:/a:llvm:llvm
 
 SPIRV_LLVM_TRANSLATOR_VERSION:=22.1.2

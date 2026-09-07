@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=wpewebkit
-PKG_VERSION:=2.53.92
+PKG_VERSION:=2.53.90
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://wpewebkit.org/releases
-PKG_HASH:=173b1b0b0f39bcf138eb4334874e3dec4e0409cf90fcac75dc6cca893bd1c065
+PKG_HASH:=a3900b3c0cb1848a192055fa4940f3500f0eca0680079f8aacabc34034a10c2e
 
 PKG_MAINTAINER:=Daniel Golle <daniel@makrotopia.org>
 PKG_LICENSE:=LGPL-2.1-or-later BSD-2-Clause

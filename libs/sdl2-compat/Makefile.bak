@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sdl2-compat
-PKG_VERSION:=2.32.72
+PKG_VERSION:=2.32.70
 PKG_RELEASE:=1
 
 PKG_SOURCE:=sdl2-compat-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/libsdl-org/sdl2-compat/releases/download/release-$(PKG_VERSION)/
-PKG_HASH:=ea85207d11f38d0da8980163eb7bbfd03ce4636c40a8d25112559bb1d381bbca
+PKG_HASH:=998fa62557eb46ffe7e5c3e2c123bc332f7df9d9f593b3ceed88ed1158428a44
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/sdl2-compat-$(PKG_VERSION)
 

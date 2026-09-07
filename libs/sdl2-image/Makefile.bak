@@ -1,12 +1,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=sdl2-image
-PKG_VERSION:=3.4.6
+PKG_VERSION:=3.4.4
 PKG_RELEASE:=1
 
 PKG_SOURCE:=SDL2_image-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/libsdl-org/SDL_image/tar.gz/release-$(PKG_VERSION)?
-PKG_HASH:=0bbac8c799273488ce32c4a53a44fc0fc70a6079458bd9d46fc4e72da138367f
+PKG_HASH:=b0c11bbde540e26d1cedf31174349fe6ab67e57658efe22e16e75172859c817d
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/SDL_image-release-$(PKG_VERSION)
 
