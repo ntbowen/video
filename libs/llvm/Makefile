@@ -5,7 +5,7 @@ PKG_VERSION:=23.1.1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).src.tar.xz
 PKG_SOURCE_URL:=https://github.com/llvm/llvm-project/releases/download/llvmorg-$(PKG_VERSION)
-PKG_HASH:=922f1817a0df7b1489272d18134ee0087a8b068828f87ac63b9861b1a9965888
+PKG_HASH:=ebe9be46fe8756d58c5b198ffad0fa2a766257add81a4dc52179bfacc7888ee6
 PKG_CPE_ID:=cpe:/a:llvm:llvm
 
 SPIRV_LLVM_TRANSLATOR_VERSION:=22.1.2
