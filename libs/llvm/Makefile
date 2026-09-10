@@ -148,7 +148,7 @@ CMAKE_OPTIONS += \
 	-DLLVM_HOST_TRIPLE=$(LLVM_TARGET_TRIPLE) \
 	-DLLVM_NATIVE_TOOL_DIR="$(STAGING_DIR_HOST)/llvm-mesa/bin" \
 	-DLLVM_ENABLE_PROJECTS="clang" \
-	-DLLVM_ENABLE_RUNTIMES="libclc" \
+	-DLLVM_ENABLE_RUNTIMES="" \
 	-DLLVM_INCLUDE_BENCHMARKS=OFF \
 	-DLLVM_INCLUDE_DOCS=OFF \
 	-DLLVM_INCLUDE_EXAMPLES=OFF \
@@ -257,7 +257,10 @@ define Build/Install
 	$(call Build/Install/Default)
 # hack: install SPIRV OpenCL libs also to host build to avoid having to build LLVM three times
 	$(INSTALL_DIR) $(CMAKE_HOST_INSTALL_PREFIX)/share/clc
-	$(CP) $(PKG_INSTALL_DIR)/usr/lib/clang/*/lib/libclc/spirv{,64}-mesa3d-.spv $(CMAKE_HOST_INSTALL_PREFIX)/share/clc
+	[ -d $(PKG_INSTALL_DIR)/usr/lib/clang ] && \
+		find $(PKG_INSTALL_DIR)/usr/lib/clang -type f -name 'spirv*-mesa3d-.spv' \
+			-exec $(CP) {} $(CMAKE_HOST_INSTALL_PREFIX)/share/clc/ ';' \
+		|| true
 endef
 
 define Package/libclang/install
